@@ -1,7 +1,21 @@
 const fc = require('fast-check');
+const util = require ('util')
 
 // Code under test
 const contains = (text, pattern) => text.indexOf(pattern) >= 0;
+
+describe('util', () => {
+    const encoder = new TextEncoder()
+    const decoder = new TextDecoder()
+    const stringToEncode = 'This is the string to encode'
+    const encodedString = encoder.encode(stringToEncode)
+    const decodedString = decoder.decode(encodedString)
+
+    it('should be equal', () => {
+        
+        fc.assert(fc.property(fc.string(), text => contains(decoder.decode(encoder.encode(text)), text)))
+    })
+})
 
 // Properties
 describe('properties', () => {
