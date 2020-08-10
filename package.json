@@ -22,8 +22,11 @@
     "typescript": "^3.9.7"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
+=======
+>>>>>>> f08135a136b816ccd567ce1855a472f4c5cada29
     "fast-check": "^2.1.0",
     "mocha": "^8.1.1"
   }
