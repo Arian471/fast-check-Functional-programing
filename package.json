@@ -1,0 +1,24 @@
+{
+  "name": "fast-check-Functional-programing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arian471/fast-check-Functional-programing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Arian471/fast-check-Functional-programing/issues"
+  },
+  "homepage": "https://github.com/Arian471/fast-check-Functional-programing#readme",
+  "dependencies": {
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
+}
