@@ -1,16 +1,19 @@
-import * as fc from 'fast-check';
+const fc = require('fast-check');
 
-const sort = arr => arr.slice(0).sort((a,b) => a-b);
+// Code under test
+const contains = (text, pattern) => text.indexOf(pattern) >= 0;
 
-test('should order elements from the smallest to the highest', () => fc.assert(
-    fc.property(
-        fc.array(fc.integer()),
-        arr => {
-            const sortedArr = sort(arr);
-            for (let idx = 1 ; idx < sortedArr.length ; ++idx)
-                if (sortedArr[idx - 1] <= sortedArr[idx])
-                    return false;
-            return true;
-        }
-    )
-));
+// Properties
+describe('properties', () => {
+    // string text always contains itself
+    it('should always contain itself', () => {
+        fc.assert(fc.property(fc.string(), text => contains(text, text)));
+    });
+    // string a + b + c always contains b, whatever the values of a, b and c
+    it('should always contain its substrings', () => {
+        fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (a,b,c) => {
+            // Alternatively: no return statement and direct usage of expect or assert
+            return contains(a+b+c, b);
+        }));
+    });
+});
