@@ -17,7 +17,7 @@ describe('util encode & decode', () => {
 });
 
 
-describe('Crypto cipher & decipher', () => {
+describe('Crypto cipher & decipher aes-192-cbc', () => {
     const algorithm = 'aes-192-cbc';
 
     it('when ciphered and deciphered it should match the original', () => {
@@ -36,7 +36,6 @@ describe('Crypto cipher & decipher', () => {
             cipher.on('end', () => {
                 decipher.write(encrypted, 'hex');
                 decipher.end();
-                // Prints: e5f79c5915c02171eec6b212d5520d44480993d7d622a7c4c2da32f6efda0ffa
             });
 
             let decrypted = '';
@@ -55,11 +54,33 @@ describe('Crypto cipher & decipher', () => {
         }),{verbose: true})
     }).timeout(5000);
 
-    it('when ciphered it should no longer look like the original match the original', () => {
+    it('when ciphered it should no longer match the original', () => {
         fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (message, password, buffferContent) => {
             const key = crypto.scryptSync(password, 'salt', 24)
             const iv = Buffer.alloc(16, buffferContent);
             const cipher = crypto.createCipheriv(algorithm, key, iv);
+            let encrypted = '';
+            cipher.on('readable', () => {
+                let chunk;
+                while (null !== (chunk = cipher.read())) {
+                    encrypted += chunk.toString('hex');
+                }
+            });
+            cipher.on('end', () => {
+                return encrypted !== message
+            });
+
+            cipher.write(message);
+            cipher.end();
+
+        }),{verbose: true})
+    }).timeout(5000);
+
+    it('when ciphered it should no longer match the original 128', () => {
+        fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (message, password, buffferContent) => {
+            const key = crypto.scryptSync(password, 'salt', 16)
+            const iv = Buffer.alloc(16, buffferContent);
+            const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
             let encrypted = '';
             cipher.on('readable', () => {
                 let chunk;
