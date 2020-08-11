@@ -21,9 +21,9 @@ describe('Crypto cipher & decipher', () => {
     const algorithm = 'aes-192-cbc';
 
     it('when ciphered and deciphered it should match the original', () => {
-        fc.assert(fc.property(fc.string(), fc.string(), (message, password) => {
+        fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (message, password, buffferContent) => {
             const key = crypto.scryptSync(password, 'salt', 24)
-            const iv = Buffer.alloc(16, 0); // todo: make randon and not static
+            const iv = Buffer.alloc(16, buffferContent);
             const cipher = crypto.createCipheriv(algorithm, key, iv);
             const decipher = crypto.createDecipheriv(algorithm, key, iv);
             let encrypted = '';
@@ -56,9 +56,9 @@ describe('Crypto cipher & decipher', () => {
     }).timeout(5000);
 
     it('when ciphered it should no longer look like the original match the original', () => {
-        fc.assert(fc.property(fc.string(), fc.string(), (message, password) => {
+        fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (message, password, buffferContent) => {
             const key = crypto.scryptSync(password, 'salt', 24)
-            const iv = Buffer.alloc(16, 0); // todo: make randon and not static
+            const iv = Buffer.alloc(16, buffferContent);
             const cipher = crypto.createCipheriv(algorithm, key, iv);
             let encrypted = '';
             cipher.on('readable', () => {
