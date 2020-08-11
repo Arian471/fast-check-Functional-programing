@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Arian471/fast-check-Functional-programing#readme",
   "dependencies": {
+    "jquery": "^3.5.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   },
