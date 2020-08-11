@@ -11,8 +11,8 @@ describe('util encode & decode', () => {
     it('when encoded and then decoded it should be the same as the original', () => {
         fc.assert(fc.property(fc.string(), text => decoder.decode(encoder.encode(text)) === text),{verbose: true})
     });
-    it('when encoded it should not contain the original', () => {
-        fc.assert(fc.property(fc.string(), text => !encoder.encode(text).includes(text)),{verbose: true})
+    it('when encoded it should not look like the original', () => {
+        fc.assert(fc.property(fc.string(), text => encoder.encode(text) !== text),{verbose: true})
     });
 });
 
@@ -47,6 +47,28 @@ describe('Crypto cipher & decipher', () => {
             });
             decipher.on('end', () => {
                 return decrypted === message;
+            });
+
+            cipher.write(message);
+            cipher.end();
+
+        }),{verbose: true})
+    }).timeout(5000);
+
+    it('when ciphered it should no longer look like the original match the original', () => {
+        fc.assert(fc.property(fc.string(), fc.string(), (message, password) => {
+            const key = crypto.scryptSync(password, 'salt', 24)
+            const iv = Buffer.alloc(16, 0); // todo: make randon and not static
+            const cipher = crypto.createCipheriv(algorithm, key, iv);
+            let encrypted = '';
+            cipher.on('readable', () => {
+                let chunk;
+                while (null !== (chunk = cipher.read())) {
+                    encrypted += chunk.toString('hex');
+                }
+            });
+            cipher.on('end', () => {
+                return encrypted !== message
             });
 
             cipher.write(message);
