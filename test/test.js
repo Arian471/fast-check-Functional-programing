@@ -52,7 +52,7 @@ describe('Crypto cipher & decipher aes-192-cbc', () => {
             cipher.end();
 
         }),{verbose: true})
-    }).timeout(5000);
+    }).timeout(0);
 
     it('when ciphered it should no longer match the original', () => {
         fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (message, password, buffferContent) => {
@@ -74,7 +74,7 @@ describe('Crypto cipher & decipher aes-192-cbc', () => {
             cipher.end();
 
         }),{verbose: true})
-    }).timeout(5000);
+    }).timeout(0);
 
     it('when ciphered it should no longer match the original 128', () => {
         fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (message, password, buffferContent) => {
@@ -96,5 +96,5 @@ describe('Crypto cipher & decipher aes-192-cbc', () => {
             cipher.end();
 
         }),{verbose: true})
-    }).timeout(5000);
+    }).timeout(0);
 });
