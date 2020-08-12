@@ -75,4 +75,15 @@ describe('Crypto cipher & decipher aes-192-cbc', () => {
 
         }),{verbose: true})
     }).timeout(0);
+
+    it('Bluefish', () => {
+        fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (message, password, buffferContent) => {
+            const key = Buffer.from(crypto.randomBytes(24))
+            const iv = Buffer.alloc(16, buffferContent);
+            const cipher = crypto.createCipher('blowfish', message);
+            console.log(cipher.final('hex'))
+
+
+        }),{verbose: true})
+    }).timeout(0);
 });
