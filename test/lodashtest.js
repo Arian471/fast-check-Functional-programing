@@ -14,7 +14,7 @@ describe('Array', () => {
         it('should return arrays of expected size', () => {
             fc.assert(
                 fc.property(
-                    fc.array(fc.string(), 10, 100),
+                    fc.array(fc.string(), 10, 100).chain(array => fc.integer(array.length)),
                     (array) => {
                         const chunkSize = getRandomIntInclusive(1, array.length)
                         const chunkedArray = _.chunk(array, chunkSize)
@@ -57,6 +57,20 @@ describe('Array', () => {
             )
           , {verbose: true})
         })
+    })
+
+    describe('invokeMap()', () => {
+      it('should invoke a method on each element of the collection', () => {
+        fc.assert(
+          fc.property(
+            fc.array(fc.string(), 10, 100), array => {
+              const modifiedArray = _.invokeMap(array, 'toUpperCase')
+              const upperCasedArray = array.map(string => string.toUpperCase())
+              return JSON.stringify(modifiedArray) === JSON.stringify(upperCasedArray)
+            }
+          )
+        )
+      })
     })
 })
 
