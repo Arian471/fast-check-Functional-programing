@@ -75,26 +75,4 @@ describe('Crypto cipher & decipher aes-192-cbc', () => {
 
         }),{verbose: true})
     }).timeout(0);
-
-    it('when ciphered it should no longer match the original 128', () => {
-        fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (message, password, buffferContent) => {
-            const key = crypto.scryptSync(password, 'salt', 16)
-            const iv = Buffer.alloc(16, buffferContent);
-            const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
-            let encrypted = '';
-            cipher.on('readable', () => {
-                let chunk;
-                while (null !== (chunk = cipher.read())) {
-                    encrypted += chunk.toString('hex');
-                }
-            });
-            cipher.on('end', () => {
-                return encrypted !== message
-            });
-
-            cipher.write(message);
-            cipher.end();
-
-        }),{verbose: true})
-    }).timeout(0);
 });
