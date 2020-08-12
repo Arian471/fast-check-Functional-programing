@@ -1,6 +1,7 @@
 const fc = require('fast-check');
 const _ = require('lodash')
-fc.configureGlobal({numRuns: 100});
+const util = require ('util');
+//fc.configureGlobal({numRuns: 100); #Vi kan kun have en global configuration af numRuns variablen, og der ligger allerede en i test
 
 const getRandomIntInclusive = (min, max) => {
     min = Math.ceil(min);
@@ -58,3 +59,25 @@ describe('Array', () => {
         })
     })
 })
+
+const branch = fc.array(fc.frequency(
+    { weight: 10, arbitrary: fc.array(fc.anything())},
+    { weight: 11, arbitrary: fc.anything()}
+))
+
+describe('Checking concat', () => {
+    it('Starting with a large nested array and concatinating the contents, comparing with the original', () => {
+        fc.assert(
+            fc.property(
+                branch, resultArray =>  {
+                    var concated = []
+                    var curIndex
+                    for(curIndex of resultArray) {
+                        curIndex = [curIndex]
+                        concated = _.concat(concated, curIndex)
+                    }
+                    return JSON.stringify(concated) === JSON.stringify(resultArray) //JSON.stringify(concated) === JSON.stringify(resultArray)
+                }
+            ),{verbose: true})
+    })
+});
