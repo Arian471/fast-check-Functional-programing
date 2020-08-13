@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="df560c54-8098-43da-82ab-f05d93d95d26" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/lodashtest.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/lodashtest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -11,8 +10,21 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="ProjectId" id="1fwySWyBykLsBGooy2kpKNREeO2" />
   <component name="ProjectViewState">
@@ -23,7 +35,31 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="ts.external.directory.path" value="C:\Users\Dirk Gently\Desktop\fast-check-Functional-programing\node_modules\typescript\lib" />
+    <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
+    <property name="ts.external.directory.path" value="C:\Users\45294\Documents\GitHub\fast-check-Functional-programing\node_modules\typescript\lib" />
+  </component>
+  <component name="RunManager" selected="Node.js.cryptoenlightener.js">
+    <configuration name="cryptoenlightener.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/test/cryptoenlightener.js" working-dir="$PROJECT_DIR$/test">
+      <method v="2" />
+    </configuration>
+    <configuration name="test\test.js" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/test.js</test-file>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.cryptoenlightener.js" />
+        <item itemvalue="Mocha.test\test.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -46,6 +82,22 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state width="1899" height="279" key="GridCell.Tab.0.bottom" timestamp="1597320688140">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1597320688140" />
+    <state width="1899" height="279" key="GridCell.Tab.0.center" timestamp="1597320688140">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="279" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1597320688140" />
+    <state width="1899" height="279" key="GridCell.Tab.0.left" timestamp="1597320688140">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="279" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1597320688140" />
+    <state width="1899" height="279" key="GridCell.Tab.0.right" timestamp="1597320688140">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="279" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597320688140" />
     <state x="-1143" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1597255167420">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
@@ -54,5 +106,9 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-980" y="98" width="918" height="858" key="find.popup/-1920.0.1920.1040/0.0.2560.1400@-1920.0.1920.1040" timestamp="1597267465559" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1597313578602">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1597313578602" />
   </component>
 </project>
