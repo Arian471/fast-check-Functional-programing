@@ -9,6 +9,11 @@ const getRandomIntInclusive = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
 }
 
+const getArrayDepth = (arr) => {
+  return Array.isArray(arr) ? 1 + Math.max(...arr.map(getArrayDepth)) : 0
+  // return 1 + Math.max(arr.map(getArrayDepth))
+}
+
 describe('Array', () => {
     describe('chunk()', () => {
         it('should return arrays of expected size', () => {
@@ -24,7 +29,6 @@ describe('Array', () => {
                         for(let i = 0; i < chunkedArraySizes.length; i++){
                           return chunkedArraySizes[i] % chunkSize === 0
                         }
-                        
             }))
         })
 
@@ -72,6 +76,23 @@ describe('Array', () => {
         )
       })
     })
+})
+
+describe('flattenDepth()', () => {
+  it('should flatten an array by x amount of times, or until depth is 1', () => {
+    fc.assert(
+      fc.property(
+        fc.array(fc.array(fc.anything(), 1, 10), 10, 100),
+        fc.nat(10),
+         (array, depth) => {
+          const flattenedArray = _.flattenDepth(array, depth)
+          const arrayDepth = getArrayDepth(array)
+          const flattenedArrayDepth = getArrayDepth(flattenedArray)
+          return flattenedArrayDepth === arrayDepth - depth || flattenedArrayDepth === 1
+        }
+      )
+    )
+  })
 })
 
 const arrayForConcat = fc.array(fc.frequency(
