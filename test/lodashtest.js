@@ -92,7 +92,7 @@ describe('flattenDepth()', () => {
         }
       )
     )
-  })
+  }).timeout(0);
 })
 
 const arrayForConcat = fc.array(fc.frequency(

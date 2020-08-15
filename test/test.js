@@ -2,7 +2,8 @@ const fc = require('fast-check');
 fc.configureGlobal({numRuns: 300});
 const util = require ('util');
 const crypto = require('crypto');
-
+const cryptojs = require('crypto-js');
+const generator = require('./generator');
 
 describe('util encode & decode', () => {
     const encoder = new TextEncoder();
@@ -175,4 +176,50 @@ describe('Crypto cipher & decipher aes-192-cbc', () => {
 
         }),{verbose: true})
     }).timeout(0);**/
+});
+
+function executeFunctionFromString(functionName, context , args ) {
+    var args = Array.prototype.slice.call(arguments, 2);
+    var namespaces = functionName.split(".");
+    var func = namespaces.pop();
+    for(var i = 0; i < namespaces.length; i++) {
+      context = context[namespaces[i]];
+    }
+    return context[func].apply(context, args);
+  }
+
+
+const hashingAlgorithm = fc.oneof(
+    fc.constant('SHA256'),
+    fc.constant('MD5'),
+    fc.constant('SHA1'),
+    fc.constant('SHA512'),
+    fc.constant('SHA224'),
+    fc.constant('SHA384'),
+    fc.constant('RIPEMD160'),
+
+    )
+
+    console.log(crypto.getHashes())
+
+describe('Crypto hashing', () => {
+
+    it('Both crypto libraries should yield the same string when hashing', () => {
+        fc.assert(fc.property(generator.stringArb(), hashingAlgorithm, (message, hashingAlg) => {
+            const hash = crypto.createHash(hashingAlg);
+            msg = JSON.stringify(message)
+            let hashNodeCrypto = '';
+            let hashCryptojs = '';
+            console.log(msg);
+            hash.update(msg);
+            hashNodeCrypto = hash.digest('hex');
+            
+            ObjCryptojs = executeFunctionFromString(hashingAlg, cryptojs, msg)
+            hashCryptojs = ObjCryptojs.toString(cryptojs.enc.Hex)
+            //hashCryptojs = cryptoFunction(msg, hashingAlg);
+
+            return hashNodeCrypto == hashCryptojs;
+
+        }),{verbose: true})
+    }).timeout(0);
 });
