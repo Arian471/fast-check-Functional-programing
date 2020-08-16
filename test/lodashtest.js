@@ -220,25 +220,166 @@ describe('test', () => {
   it('should return only strings', () => {
     fc.assert(
       fc.property(fc.string(), strings => {
-          console.log('strings: ', strings)
+          // console.log('strings: ', strings)
         }
       )
     )
   })
 })
 
+const alphabetArr = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'W',
+  'X',
+  'Y',
+  'Z'
+]
 
 const orderByGen = fc.oneof(
   fc.array(fc.record({
     date: fc.date(),
-    string: fc.oneof(fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode()),
-    number: fc.oneof(fc.integer(), fc.float(), fc.double()),
+    string: fc.oneof(fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode(), fc.constantFrom(...alphabetArr)),
+    number: fc.oneof(fc.integer(), fc.float(), fc.double(), fc.nat(30)),
     falsy: fc.falsy(),
     nested: fc.record({id: fc.nat(100)})
-  }))
+  }), 200, 300)
   )
 
+  Array.prototype.onlyHasType = function(type){
+    if(typeof type !== "string") throw new Error(`parameter must be of type 'string'`)
+    return this.every(entry => (typeof entry === type))
+  }
+  Array.prototype.isSortedBy = function(properties, orders) {
+    if(!Array.isArray(properties) || !Array.isArray(orders)) throw new Error('parameters must be of type array')
+    if(!_.every(properties, _.isString || !_.every(orders, _.isString))) throw new Error('arrays must only contain strings')
+    const separatedProps = properties.map(propstring => propstring.split("."))
+    // console.log('length: ', this.length)
+    // console.log('separatedProps: ', separatedProps)
+    const outerArray = []
+    this.forEach((e, i) => {
 
+      
+      // console.log('e', e)
+      // e[]
+      let entry = e
+      for(let k = 0; k < separatedProps.length; k++){
+        // entry = entry[]
+        let tempEntry = entry
+        const newObj = {}
+        for(let j = 0; j < separatedProps[k].length; j++) {
+            // console.log(`separatedProps[${k}][${j}]`, separatedProps[k][j])
+            tempEntry = tempEntry[separatedProps[k][j]]
+            // console.log('tempEntry', tempEntry)
+            // console.log(`entry[${j}]`, entry[separatedProps[k][j]])
+            
+            console.log(`separatedProps[${k}][${j}]`, separatedProps[k][j])
+            console.log('newObj: ', newObj)
+            if(separatedProps[k].length > 1 && separatedProps[k].length === j){
+              // newObj[separatedProps[k][j]] = te[separatedProps[k][j]]
+              newObj[separatedProps[k][j]] = tempEntry
+              console.log('newObj temp:', newObj)
+              console.log('pushing tempentry: ', tempEntry)
+              outerArray.push(newObj)
+            } else {
+              newObj[separatedProps[k][j]] = entry[separatedProps[k][j]]
+              console.log('newObj NON temp:', newObj)
+              console.log('pushing entry: ', entry[separatedProps[k][j]])
+              outerArray.push(newObj)
+            }
+        }
+      }
+      // console.log('arr: ', arr)
+      // if(i < separatedProps.length){
+      //   let obj = this[i]
+        
+      //   separatedProps[i].forEach((innerEl, k) => {
+      //     obj = obj[innerEl]
+      //     arr.push(obj)
+      //   })
+      //   // console.log('arr', arr)
+      // }
+      // if(i < separatedProps.length){
+      //   let obj = this[i]
+        
+      //   separatedProps[i].forEach((innerEl, k) => {
+      //     obj = obj[innerEl]
+      //     arr.push(obj)
+      //   })
+      //   // console.log('arr', arr)
+      // }
+      // console.log('arrays inner: ', arrays)
+      // outerArray.push(arr)
+    })
+
+    console.log('outerArray: ', outerArray)
+    // for(let i = 0; i < this.length; i++){
+
+    // }
+    //   console.log(`seperatedProps[${i}]: `, separatedProps[i])
+    //   for(let k = 0; k < separatedProps[i].length; k++){
+    //     console.log('k', k)
+    //     console.log('i', i)
+    //     console.log('i k: ',separatedProps[i])
+    //   }
+      // console.log(`this[${i}]: `, this[i])
+      
+      // const x = separatedProps.map(propArray => {
+      //   propArray.map(val => console.log('val: ', val))
+      //   return propArray
+      // })
+
+      // console.log('x :', x)
+      return true
+    }
+    
+  const testArr = [
+      {
+        number: 1,
+        child: {
+          number: 2,
+          letter: 'b'
+        }
+      },
+      {
+        number: 3,
+        child: {
+          number: -1,
+          letter: 'a'
+        }
+      },
+      {
+        number: 3,
+        child: {
+          number: 10,
+          letter: 'b'
+        }
+      }
+  ]
+  const props = ['number', 'child.letter']
+  const orders = ['asc', 'desc']
+
+  console.log('testArr', testArr)
+  console.log('is sorted by: ', testArr.isSortedBy(props, orders))
 // const encryptionAlgorithm = fc.oneof(
 //   fc.array(fc.string(), fc.integer()),
 //   fc.array(fc.)
@@ -252,10 +393,10 @@ describe('orderBy()', () => {
       fc.property(
         orderByGen, generated => {
 
-          console.log('generated: ', JSON.stringify(generated))
+          // console.log('generated: ', JSON.stringify(generated))
 
-          const ordered = _.orderBy(generated, ['number', ['nested', 'id']], ['asc', 'desc'])
-          console.log('ordered: ', ordered)
+          const ordered = _.orderBy(generated, [['number'], ['nested.id']], ['asc', 'desc'])
+          // console.log('ordered: ', ordered)
           // // const x = generated.map( key => key)
           //  console.log('generated', JSON.stringify(generated))
           //  const newA = _.orderBy(generated, [['number', 'child.number', 'child.child.number', 'child.child.child.number']], 'asc')
@@ -501,7 +642,7 @@ describe('orderBy()', () => {
           
           // //console.log('ordered: ', ordered)
         }
-      ), {numRuns: 20}
+      ), {numRuns: 10}
     )
   })
 })
