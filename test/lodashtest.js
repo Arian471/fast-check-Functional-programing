@@ -1,7 +1,7 @@
 const fc = require('fast-check');
 const _ = require('lodash')
 const util = require ('util');
-//fc.configureGlobal({numRuns: 100); #Vi kan kun have en global configuration af numRuns variablen, og der ligger allerede en i test
+fc.configureGlobal({numRuns: 1}); //  Vi kan kun have en global configuration af numRuns variablen, og der ligger allerede en i test
 
 const getRandomIntInclusive = (min, max) => {
     min = Math.ceil(min);
@@ -95,16 +95,407 @@ describe('flattenDepth()', () => {
   })
 })
 
-const encryptionAlgorithm = fc.oneof(
-  fc.array(fc.string(), fc.integer()),
-  fc.array(fc.)
+
+const objectSettings = {
+  Settings: {
+    maxDepth: 1
+  }
+}
+
+ const keyGenerator = fc.oneof(
+  fc.constant('test'),
+  fc.constant('test1'),
+  fc.constant('test2'),
+  fc.constant('test3'),
+  fc.constant('test4'),
+  fc.constant('test5'),
+  fc.constant('test6'),
+  fc.constant('test7'),
+  fc.constant('test8'),
+  fc.constant('test9'),
+  fc.constant('test10'),
+  fc.constant('test11'),
+  fc.constant('test12'),
+  fc.constant('test13'),
+  fc.constant('test14'),
+  fc.constant('test15'),
+  fc.constant('test16'),
+  fc.constant('test17'),
+  fc.constant('test18'),
+  fc.constant('test19'),
+  fc.constant('test20'),
+ )
+
+//  const x = [
+//   fc.object({key: fc.constant('date'), values: [fc.date()]}),
+//   fc.object({key: fc.constant('string'), values: [fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode()]}),
+//   fc.object({key: fc.constant('number'), values: [fc.integer(), fc.float(), fc.double(), fc.bigInt()]}),
+//   fc.object({key: fc.constant('falsy'), values: [fc.falsy()]}),
+//   fc.object({key: fc.constant('object'), values: [fc.object()]})
+// ]
+// const orderByGenerator = fc.record(
+//   fc.object({key: fc.constant('date'), values: [fc.date()]}),
+//   fc.object({key: fc.constant('string'), values: [fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode()]}),
+//   fc.object({key: fc.constant('number'), values: [fc.integer(), fc.float(), fc.double()]}),
+//   fc.object({key: fc.constant('falsy'), values: [fc.falsy()]}),
+//   fc.object({key: fc.constant('object'), values: [fc.object()]})
+// )
+
+
+
+// const { tree } = fc.letrec(tie => ({
+//   tree: fc.oneof(tie('node'), tie('leaf'), tie('leaf')),
+//   node: fc.tuple(tie('tree'), tie('tree')),
+//   leaf: fc.nat()
+// }))
+// console.log('tree', tree())
+
+const orderByArbitraries = fc.record({
+  date: fc.date(),
+  string: fc.oneof(fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode()),
+  number: fc.oneof(fc.integer(), fc.float(), fc.double()),
+  falsy: fc.falsy()
+})
+
+const treeDepth = 5
+const tree = fc.memo(n => node(n));
+const node = fc.memo(n => {
+  console.log('n = ', n)
+
+
+  if(n === treeDepth) {
+    return fc.array(fc.record({
+      child: tree(),
+      date: fc.date(),
+      string: fc.oneof(fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode()),
+      number: fc.oneof(fc.integer(), fc.float(), fc.double()),
+      falsy: fc.falsy()
+  }))
+  }
+  else if(n > 1) {
+    return fc.record({
+      child: tree(),
+      date: fc.date(),
+      string: fc.oneof(fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode()),
+      number: fc.oneof(fc.integer(), fc.float(), fc.double()),
+      falsy: fc.falsy()
+    })
+  } else {
+    return fc.record({
+      date: fc.date(),
+      string: fc.oneof(fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode()),
+      number: fc.oneof(fc.integer(), fc.float(), fc.double()),
+      falsy: fc.falsy()
+    })
+  }
+
+  if (n <= treeDepth) {
+    return 
+  } return fc.record({
+    date: fc.date(),
+    string: fc.oneof(fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode()),
+    number: fc.oneof(fc.integer(), fc.float(), fc.double()),
+    falsy: fc.falsy(),
+    child: tree()
+  }) 
+  
+  return fc.object({key: keyGenerator, values: [fc.record({
+    date: fc.date(),
+    string: fc.oneof(fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode()),
+    number: fc.oneof(fc.integer(), fc.float(), fc.double()),
+    falsy: fc.falsy()
+  })]}) //fc.object({key: keyGenerator, values: [orderByArbitraries], withBoxedValues: false})
+   //fc.object({key: keyGenerator, values: [tree(), orderByArbitraries]}) //fc.nat(2,2) //fc.object({key: keyGenerator, values: [tree()]})//fc.object({key: keyGenerator, value: tree()}); // tree() is equivalent to tree(n-1)
+});
+
+const typeArray = [
+  'date',
+  'string',
+  'number',
+  'falsy'
+]
+
+
+describe('test', () => {
+  it('should return only strings', () => {
+    fc.assert(
+      fc.property(fc.string(), strings => {
+          console.log('strings: ', strings)
+        }
+      )
+    )
+  })
+})
+
+
+const orderByGen = fc.oneof(
+  fc.array(fc.record({
+    date: fc.date(),
+    string: fc.oneof(fc.string(), fc.hexa(), fc.char(), fc.ascii(), fc.unicode(), fc.char16bits(), fc.fullUnicode()),
+    number: fc.oneof(fc.integer(), fc.float(), fc.double()),
+    falsy: fc.falsy(),
+    nested: fc.record({id: fc.nat(100)})
+  }))
 )
+//  don't think orderBy can access nested arrays
+//  will have to use arrays of objects with nested values to test
+//  fc.property(fc.record({ number: oneof(...)})) etc.
 describe('orderBy()', () => {
   it('should do something', () => {
     fc.assert(
       fc.property(
+        orderByGen, generated => {
 
-      )
+          console.log('generated: ', JSON.stringify(generated))
+
+          const ordered = _.orderBy(generated, ['number', ['nested', 'id']], ['asc', 'desc'])
+          console.log('ordered: ', ordered)
+          // // const x = generated.map( key => key)
+          //  console.log('generated', JSON.stringify(generated))
+          //  const newA = _.orderBy(generated, [['number', 'child.number', 'child.child.number', 'child.child.child.number']], 'asc')
+          //  console.log('new: ', JSON.stringify(newA))
+          // // if(Array.isArray(generated)){
+
+          // //   console.log('mapped', generated.map( key => key))
+          // // }
+
+          // console.log('test')
+
+          // const testArrayNew = [
+          //   {
+          //     number: 0,
+          //     children: [
+          //       {
+          //         number: 0,
+          //         children: [
+          //           {
+          //             number: 0
+          //           },
+          //           {
+          //             number: 1
+          //           },
+          //           {
+          //             number: -2
+          //           }
+          //         ]
+          //       },
+          //       {
+          //         number: 1,
+          //         children: [
+          //           {
+          //             number: 0
+          //           },
+          //           {
+          //             number: 1
+          //           },
+          //           {
+          //             number: -2
+          //           }
+          //         ]
+          //       },
+          //       {
+          //         number: -2,
+          //         children: [
+          //           {
+          //             number: 0
+          //           },
+          //           {
+          //             number: 1
+          //           },
+          //           {
+          //             number: -2
+          //           }
+          //         ]
+          //       },
+          //     ]
+          //   },
+          //   {
+          //     number: 1,
+          //     children: [
+          //       {
+          //         number: 0,
+          //         children: [
+          //           {
+          //             number: 0
+          //           },
+          //           {
+          //             number: 1
+          //           },
+          //           {
+          //             number: -2
+          //           }
+          //         ]
+          //       },
+          //       {
+          //         number: 1,
+          //         children: [
+          //           {
+          //             number: 0
+          //           },
+          //           {
+          //             number: 1
+          //           },
+          //           {
+          //             number: -2
+          //           }
+          //         ]
+          //       },
+          //       {
+          //         number: -2,
+          //         children: [
+          //           {
+          //             number: 0
+          //           },
+          //           {
+          //             number: 1
+          //           },
+          //           {
+          //             number: -2
+          //           }
+          //         ]
+          //       },
+          //     ]
+          //   },
+          //   {
+          //     number: -2,
+          //     children: [
+          //       {
+          //         number: 0,
+          //         children: [
+          //           {
+          //             number: 0
+          //           },
+          //           {
+          //             number: 1
+          //           },
+          //           {
+          //             number: -2
+          //           }
+          //         ]
+          //       },
+          //       {
+          //         number: 1,
+          //         children: [
+          //           {
+          //             number: 0
+          //           },
+          //           {
+          //             number: 1
+          //           },
+          //           {
+          //             number: -2
+          //           }
+          //         ]
+          //       },
+          //       {
+          //         number: -2,
+          //         children: [
+          //           {
+          //             number: 0
+          //           },
+          //           {
+          //             number: 1
+          //           },
+          //           {
+          //             number: -2
+          //           }
+          //         ]
+          //       },
+          //     ]
+          //   }
+          // ]
+          // const testArray = [
+          //   {
+          //     child: {
+          //       child: {
+          //         date: "+215206-02-11T09:26:05.056Z",
+          //         string: "",
+          //         number: 0,
+          //         falsy: null
+          //       },
+          //       date: "+215206-02-11T09:26:05.056Z",
+          //       string: "",
+          //       number: -2,
+          //       falsy: null
+          //     },
+          //     date: "+215206-02-11T09:26:05.056Z",
+          //     string: "",
+          //     number: 4,
+          //     falsy: null
+          //   },
+          //   {
+          //     child: {
+          //       child: {
+          //         date: "+215206-02-11T09:26:05.056Z",
+          //         string: "",
+          //         number: 50000,
+          //         falsy: null
+          //       },
+          //       date: "+215206-02-11T09:26:05.056Z",
+          //       string: "",
+          //       number: -194023,
+          //       falsy: null
+          //     },
+          //     date: "+215206-02-11T09:26:05.056Z",
+          //     string: "",
+          //     number: -1543385446,
+          //     falsy: null
+          //   },
+          //   {
+          //     child: {
+          //       child: {
+          //         date: "+215206-02-11T09:26:05.056Z",
+          //         string: "",
+          //         number: 10000000,
+          //         falsy: null
+          //       },
+          //       date: "+215206-02-11T09:26:05.056Z",
+          //       string: "",
+          //       number: 5,
+          //       falsy: null
+          //     },
+          //     date: "+215206-02-11T09:26:05.056Z",
+          //     string: "",
+          //     number: 10,
+          //     falsy: null
+          //   }
+          // ]
+
+          // // const newB = _.orderBy(testArrayNew, [['number'], ['children.number'], ['children.children.number']], ['asc', 'desc', 'asc'])
+
+          // // const newC = _.orderBy(testArrayNew, (array) => {
+          // //   console.log('array: ', array)
+          // //   array.map(entry => {
+          // //     if('children' in entry){
+          // //       const orderedChildren =_.orderBy(entry.children, 'number', 'asc')
+          // //       console.log('orderedChildren:', orderedChildren)
+          // //     }
+          // //     return entry.number
+          // //   })
+          // // }, 'asc')
+          // const testData = _.map(testArrayNew, obj => {
+          //   console.log('object: ', JSON.stringify(obj))
+          //   if('children' in obj) {
+          //     console.log('has children')
+          //     return _.orderBy(obj.children, 'number', 'asc')
+          //   } else {
+          //     return null
+          //   }
+          // })
+
+          // console.log('testData: ', testData)
+          // console.log('manual test:', JSON.stringify(newC))
+
+          // // let ordered
+          // // if(Array.isArray(generated)){
+          // //   ordered = _.orderBy(generated.map( key => key))
+          // //   console.log('ordered: ', ordered)
+          // // }
+          // // const ordered = _.orderBy(generated, 'asc')
+          
+          // //console.log('ordered: ', ordered)
+        }
+      ), {numRuns: 20}
     )
   })
 })
