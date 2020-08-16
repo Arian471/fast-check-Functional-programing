@@ -92,7 +92,7 @@ describe('flattenDepth()', () => {
         }
       )
     )
-  })
+  }).timeout(0);
 })
 
 
@@ -236,7 +236,13 @@ const orderByGen = fc.oneof(
     falsy: fc.falsy(),
     nested: fc.record({id: fc.nat(100)})
   }))
-)
+  )
+
+
+// const encryptionAlgorithm = fc.oneof(
+//   fc.array(fc.string(), fc.integer()),
+//   fc.array(fc.)
+// )
 //  don't think orderBy can access nested arrays
 //  will have to use arrays of objects with nested values to test
 //  fc.property(fc.record({ number: oneof(...)})) etc.
