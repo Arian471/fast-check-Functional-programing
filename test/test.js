@@ -5,6 +5,12 @@ const crypto = require('crypto');
 const cryptojs = require('crypto-js');
 const generator = require('./generator');
 
+/*fc.statistics(
+    generator.randArb(),
+    v => Object.prototype.toString.call(v),
+    { numRuns: 1000, logger: console.log }
+)*/
+
 describe('util encode & decode', () => {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
@@ -189,7 +195,7 @@ function decrypt(encInput, encryptionAlg, keyBuff, ivBuff){
 
 describe('Crypto cipher & decipher algorithms', () => {
     it('when ciphered and deciphered it should match the original', () => {
-        fc.assert(fc.property(fc.string(), fc.integer(), fc.integer(), encryptionAlgorithm, fc.nat(), fc.nat(), (message, password, buffferContent, algAndSize, variableLengthKey, variableLengthIv) => {
+        fc.assert(fc.property(generator.stringArb(), generator.randArb(), generator.randArb(), encryptionAlgorithm, fc.nat(), fc.nat(), (message, password, buffferContent, algAndSize, variableLengthKey, variableLengthIv) => {
             let key = Buffer.alloc(algAndSize[1], password)
             if(algAndSize[2] === 9007199254740991){
                 key = Buffer.alloc(variableLengthKey+1, password)
@@ -204,7 +210,7 @@ describe('Crypto cipher & decipher algorithms', () => {
     }).timeout(0);
 
     it('when ciphered it should no longer match the original', () => {
-        fc.assert(fc.property(fc.string(), fc.integer(), fc.integer(), encryptionAlgorithm, fc.nat(), fc.nat(), (message, password, buffferContent, algAndSize, variableLengthKey, variableLengthIv) => {
+        fc.assert(fc.property(generator.stringArb(), generator.randArb(), generator.randArb(), encryptionAlgorithm, fc.nat(), fc.nat(), (message, password, buffferContent, algAndSize, variableLengthKey, variableLengthIv) => {
             let key = Buffer.alloc(algAndSize[1], password)
             if(algAndSize[2] === 9007199254740991){
                 key = Buffer.alloc(variableLengthKey+1, password)
