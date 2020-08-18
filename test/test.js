@@ -215,7 +215,7 @@ describe('Crypto cipher & decipher algorithms', () => {
             }
             let crypted = encryptText(message, algAndSize[0], key, iv)
             if(message.length>0){
-                return !crypted.includes(message)
+                return crypted!==message
             } else {
                 return true
             }
@@ -249,7 +249,6 @@ const hashingAlgorithm = fc.oneof(
     //console.log(crypto.getHashes())
 
 describe('Crypto hashing', () => {
-
     it('Both crypto libraries should yield the same string when hashing', () => {
         fc.assert(fc.property(generator.stringArb(), hashingAlgorithm, (message, hashingAlg) => {
             const hash = crypto.createHash(hashingAlg);

@@ -39,7 +39,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="C:\Users\45294\Documents\GitHub\fast-check-Functional-programing\node_modules\typescript\lib" />
   </component>
-  <component name="RunManager" selected="Mocha.Crypto cipher &amp; decipher algorithms.when ciphered it should no longer match the original">
+  <component name="RunManager" selected="Mocha.test\test.js">
     <configuration name="cryptoenlightener.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="cryptoenlightener.js" working-dir="$PROJECT_DIR$/utilFiles">
       <method v="2" />
     </configuration>
@@ -112,10 +112,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Mocha.test\test.js" />
         <item itemvalue="Mocha.Crypto cipher &amp; decipher algorithms.when ciphered it should no longer match the original" />
         <item itemvalue="Node.js.cryptoenlightener.js" />
         <item itemvalue="Mocha.Crypto cipher &amp; decipher algorithms.when ciphered and deciphered it should match the original" />
-        <item itemvalue="Mocha.test\test.js" />
         <item itemvalue="Mocha.Crypto cipher &amp; decipher aes-192-cbc.when ciphered and deciphered it should match the original" />
       </list>
     </recent_temporary>
@@ -132,7 +132,7 @@
       <workItem from="1597499626358" duration="1659000" />
       <workItem from="1597501367464" duration="11319000" />
       <workItem from="1597513166211" duration="1600000" />
-      <workItem from="1597753486569" duration="190000" />
+      <workItem from="1597753486569" duration="709000" />
     </task>
     <servers />
   </component>
@@ -149,28 +149,28 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="734" y="355" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1597501181458" />
-    <state width="1899" height="284" key="GridCell.Tab.0.bottom" timestamp="1597753645568">
+    <state width="1899" height="284" key="GridCell.Tab.0.bottom" timestamp="1597754150239">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="284" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.2560.1400@-1920.0.1920.1040" timestamp="1597753645568" />
+    <state width="1899" height="284" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.2560.1400@-1920.0.1920.1040" timestamp="1597754150239" />
     <state width="1256" height="401" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1597512416249" />
     <state width="1899" height="279" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1597320688140" />
-    <state width="1899" height="284" key="GridCell.Tab.0.center" timestamp="1597753645568">
+    <state width="1899" height="284" key="GridCell.Tab.0.center" timestamp="1597754150239">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="284" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.2560.1400@-1920.0.1920.1040" timestamp="1597753645568" />
+    <state width="1899" height="284" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.2560.1400@-1920.0.1920.1040" timestamp="1597754150239" />
     <state width="1256" height="401" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1597512416249" />
     <state width="1899" height="279" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1597320688140" />
-    <state width="1899" height="284" key="GridCell.Tab.0.left" timestamp="1597753645568">
+    <state width="1899" height="284" key="GridCell.Tab.0.left" timestamp="1597754150239">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="284" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.2560.1400@-1920.0.1920.1040" timestamp="1597753645568" />
+    <state width="1899" height="284" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.2560.1400@-1920.0.1920.1040" timestamp="1597754150239" />
     <state width="1256" height="401" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1597512416249" />
     <state width="1899" height="279" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1597320688140" />
-    <state width="1899" height="284" key="GridCell.Tab.0.right" timestamp="1597753645568">
+    <state width="1899" height="284" key="GridCell.Tab.0.right" timestamp="1597754150239">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="284" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.2560.1400@-1920.0.1920.1040" timestamp="1597753645568" />
+    <state width="1899" height="284" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.2560.1400@-1920.0.1920.1040" timestamp="1597754150239" />
     <state width="1256" height="401" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.2560.1400@0.0.2560.1400" timestamp="1597512416249" />
     <state width="1899" height="279" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597320688140" />
     <state width="2539" height="492" key="GridCell.Tab.1.bottom" timestamp="1597502527409">
