@@ -358,13 +358,7 @@ Array.prototype.isSortedBy = function (properties, orders) {
     let values = []; //  array of the values which will be added to innerArr
 
     for (let i = 0; i < separatedProps.length; i++) {
-      console.log("i", i);
-      console.log('compareObject.orders[i] before', compareObject.orders[i])
       compareObject.orders[i] = compareObject.orders[i] === undefined ? 'asc' : compareObject.orders[i]
-      
-      
-      console.log('compareObject.orders[i] after', compareObject.orders[i])
-      // compareObject.orders.push(order)
       const property = separatedProps[i]; //  property which shall be sorted, can be array of length > 1 if it is a nested property
       // orders.push(order);
       if (property.length > 1) {
@@ -387,45 +381,48 @@ Array.prototype.isSortedBy = function (properties, orders) {
   });
 
   for(let i = 0; i < compareObject.orders.length; i++) {
-    const order = compareObject.orders[i]
+    const orders = compareObject.orders[i]
     const value = compareObject.values[i]
+    console.log('value: ', value)
+    console.log('order: ', orders)
     console.log('i + 1  = ', i+1)
+    const nextValue = i+1 < compareObject.values.length ? compareObject.values[i+1] : null
+
+    for(let k = 0; k < orders.length; k++) {
+      if(nextValue !== null){
+        for()
+        
+      }
+    }
     console.log('values.length = ', compareObject.values.length)
     if(i+1 < compareObject.values.length) {
       console.log('asd', compareObject.values[i+1])
     }
-    const nextValue = i+1 < compareObject.values.length ? compareObject.values[i+1] : null
 
-    console.log('order', order)
-    console.log('order === asc', order === 'asc')
-    console.log('order === desc', order === 'desc')
+    // console.log('order', order)
+    // console.log('order === asc', order === 'asc')
+    // console.log('order === desc', order === 'desc')
 
-    const x = compareObject.values[i]
-    if(nextValue !== null){
-      if(order === 'asc'){
-        console.log('inner order == asc', true)
-        if(value < nextValue){
-          console.log(`${value} is bigger than ${nextValue}`)
-          console.log(`true`)
-        } else {
-          console.log('asc else')
-          return false
-        }
-      } else if (order === 'desc') {
-        if(value > nextValue){
-          console.log(`${value} is less than ${nextValue}`)
-          console.log(`true`)
-        } else {
-          console.log('desc else')
-          return false
-        }
-        console.log('order is desc')
+
+    // if(nextValue !== null){
+    //   if(order === 'asc'){
+    //     if(value < nextValue){
+    //     } else {
+    //       return false
+    //     }
+    //   } else if (order === 'desc') {
+    //     if(value > nextValue){
+    //       console.log(`${value} is less than ${nextValue}`)
+    //       console.log(`true`)
+    //     } else {
+    //       console.log('desc else')
+    //       return false
+    //     }
+    //     console.log('order is desc')
         
-      }
-    }
+    //   }
+    // }
     return true
-
-    
   }
   
   compareObject.orders.forEach((order, i) => {
