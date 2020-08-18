@@ -5,6 +5,12 @@ const crypto = require('crypto');
 const cryptojs = require('crypto-js');
 const generator = require('./generator');
 
+/*fc.statistics(
+    generator.randArb(),
+    v => Object.prototype.toString.call(v),
+    { numRuns: 1000, logger: console.log }
+)*/
+
 describe('util encode & decode', () => {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
