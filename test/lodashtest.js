@@ -38,8 +38,6 @@ Array.prototype.equals = function (array) {
   return true;
 }
 
-const 
-
 describe("Array", () => {
   describe("chunk()", () => {
     it("should return arrays of expected size", () => {
@@ -371,6 +369,72 @@ const orderByGen = fc.oneof(
   )
 );
 
+
+
+
+
+
+
+
+const testArr = [
+  {
+    number: 1,
+    child: {
+      number: 2,
+      letter: "b",
+    },
+  },
+  {
+    number: 4,
+    child: {
+      number: -1,
+      letter: "a",
+    },
+  },
+  {
+    number: 3,
+    child: {
+      number: 10,
+      letter: "b",
+    },
+  },
+  {
+    number: 3,
+    child: {
+      number: 10,
+      letter: "c",
+    },
+  },
+  {
+    number: 3,
+    child: {
+      number: 10,
+      letter: "b",
+    },
+  },
+  {
+    number: 4,
+    child: {
+      number: 10,
+      letter: "c",
+    },
+  },
+];
+
+describe("aaaaaa()", () => {
+  it("prints", () => {
+    return newTestArray.isSortedBy(newProps, newOrders)
+
+
+  })
+})
+
+function Comparator(a, b) {
+  if (a[0] < b[0]) return -1;
+  if (a[0] > b[0]) return 1;
+  return 0;
+}
+
 Array.prototype.onlyHasType = function (type) {
   if (typeof type !== "string")
     throw new Error(`parameter must be of type 'string'`);
@@ -381,9 +445,53 @@ Array.prototype.isSortedBy = function (properties, orders) {
     throw new Error("parameters must be of type array");
   if (!_.every(properties, _.isString || !_.every(orders, _.isString)))
     throw new Error("arrays must only contain strings");
+  properties = properties.reverse()
+  orders = orders.reverse()
   const separatedProps = properties.map((propstring) => propstring.split("."));
+  console.log('separatedProps: ', separatedProps)
+  const copyOA = this.slice()
+  let reOrderedArray = []
+
+  separatedProps.forEach((propertyArr, propertyIndex) => {
+    //for each property that we need to sort by
+    let valueIndexArray = []
+    //we generate a array of that the values for that property and the index in which that property is
+    this.forEach((e,i) => {
+      let tempValue = e
+      propertyArr.forEach(properyPart => {
+        tempValue = tempValue[properyPart]
+      })
+      valueIndexArray.push([tempValue,i])
+    })
+    valueIndexArray = valueIndexArray.sort(Comparator)
+
+
+
+
+    if(orders[propertyIndex] === "desc"){
+      valueIndexArray = valueIndexArray.reverse()
+    }
+    reOrderedArray = []
+    valueIndexArray.forEach(via => {
+      reOrderedArray.push(copyOA[via[1]])
+    })
+    console.log(propertyArr)
+    console.log(reOrderedArray)
+  })
+  return (String(reOrderedArray) === String(this))
+
+
+
+
+
+
+
+
   // console.log('length: ', this.length)
   // console.log('separatedProps: ', separatedProps)
+/**
+
+
   const outerArray = [];
   console.log("this", this);
   const compareObject = {
@@ -469,38 +577,23 @@ Array.prototype.isSortedBy = function (properties, orders) {
   
   compareObject.orders.forEach((order, i) => {
     console.log("order: ", order);
-  });
+  });**/
 };
 
-const testArr = [
-  {
-    number: 1,
-    child: {
-      number: 2,
-      letter: "b",
-    },
-  },
-  {
-    number: 3,
-    child: {
-      number: -1,
-      letter: "a",
-    },
-  },
-  {
-    number: 3,
-    child: {
-      number: 10,
-      letter: "b",
-    },
-  },
-];
 const props = ["number", "child.letter", "child.number"];
 const orders = ["asc", "desc"];
 
 const newProps = ["number", "child.letter"]
 const newOrders = ["asc", "desc"]
-const newTestArray = _.orderBy(testArr, newProps, newOrders)
+const newTestArray = _.orderBy(testArr, newProps, newOrders)/**
+describe("aaaaaa()", () => {
+  it("prints", () => {
+    newTestArray.forEach(value => console.log(value.number + ", " + value.child.letter))
+
+
+  })
+})**/
+
 console.log("testArr", testArr);
 console.log("is sorted by: ", newTestArray.isSortedBy(newProps, newOrders));
 // const encryptionAlgorithm = fc.oneof(
