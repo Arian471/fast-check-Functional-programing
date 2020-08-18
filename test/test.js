@@ -188,8 +188,6 @@ function decrypt(encInput, encryptionAlg, keyBuff, ivBuff){
 }
 
 describe('Crypto cipher & decipher algorithms', () => {
-    const algorithm = 'aes-192-cbc';
-
     it('when ciphered and deciphered it should match the original', () => {
         fc.assert(fc.property(fc.string(), fc.integer(), fc.integer(), encryptionAlgorithm, fc.nat(), fc.nat(), (message, password, buffferContent, algAndSize, variableLengthKey, variableLengthIv) => {
             let key = Buffer.alloc(algAndSize[1], password)
@@ -206,23 +204,21 @@ describe('Crypto cipher & decipher algorithms', () => {
     }).timeout(0);
 
     it('when ciphered it should no longer match the original', () => {
-        fc.assert(fc.property(fc.string(), fc.string(), fc.string(), (message, password, buffferContent) => {
-            const key = crypto.scryptSync(password, 'salt', 24)
-            const iv = Buffer.alloc(16, buffferContent);
-            const cipher = crypto.createCipheriv(algorithm, key, iv);
-            let encrypted = '';
-            cipher.on('readable', () => {
-                let chunk;
-                while (null !== (chunk = cipher.read())) {
-                    encrypted += chunk.toString('hex');
-                }
-            });
-            cipher.on('end', () => {
-                return encrypted !== message
-            });
-
-            cipher.write(message);
-            cipher.end();
+        fc.assert(fc.property(fc.string(), fc.integer(), fc.integer(), encryptionAlgorithm, fc.nat(), fc.nat(), (message, password, buffferContent, algAndSize, variableLengthKey, variableLengthIv) => {
+            let key = Buffer.alloc(algAndSize[1], password)
+            if(algAndSize[2] === 9007199254740991){
+                key = Buffer.alloc(variableLengthKey+1, password)
+            }
+            let iv = Buffer.alloc(algAndSize[3], buffferContent);
+            if(algAndSize[5] === 9007199254740991){
+                iv = Buffer.alloc(variableLengthIv+1, password)
+            }
+            let crypted = encryptText(message, algAndSize[0], key, iv)
+            if(message.length>0){
+                return !crypted.includes(message)
+            } else {
+                return true
+            }
 
         }),{verbose: true})
     }).timeout(0);
