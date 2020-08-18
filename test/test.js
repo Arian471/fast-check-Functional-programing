@@ -248,23 +248,22 @@ const hashingAlgorithm = fc.oneof(
 
     //console.log(crypto.getHashes())
 
-describe('Crypto hashing', () => {
-    it('Both crypto libraries should yield the same string when hashing', () => {
-        fc.assert(fc.property(generator.stringArb(), hashingAlgorithm, (message, hashingAlg) => {
-            const hash = crypto.createHash(hashingAlg);
-            msg = JSON.stringify(message)
-            let hashNodeCrypto = '';
-            let hashCryptojs = '';
-            //console.log(msg);
-            hash.update(msg);
-            hashNodeCrypto = hash.digest('hex');
-            
-            ObjCryptojs = executeFunctionFromString(hashingAlg, cryptojs, msg)
-            hashCryptojs = ObjCryptojs.toString(cryptojs.enc.Hex)
-            //hashCryptojs = cryptoFunction(msg, hashingAlg);
+    describe('Crypto hashing', () => {
 
-            return hashNodeCrypto == hashCryptojs;
-
-        }),{verbose: true})
-    }).timeout(0);
-});
+        it('Both crypto libraries should yield the same string when hashing', () => {
+            fc.assert(fc.property(generator.stringArb(), hashingAlgorithm, 
+            (message, hashingAlg) => {
+                const hash = crypto.createHash(hashingAlg);
+                let hashNodeCrypto = '';
+                let hashCryptojs = '';
+                hash.update(message);
+                hashNodeCrypto = hash.digest('hex');
+                
+                hashCryptojs = executeFunctionFromString(hashingAlg, cryptojs, message)
+                .toString(cryptojs.enc.Hex);
+    
+                return hashNodeCrypto == hashCryptojs;
+    
+            }),{verbose: true})
+        }).timeout(0);
+    });

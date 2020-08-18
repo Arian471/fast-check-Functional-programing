@@ -38,7 +38,6 @@ Array.prototype.equals = function (array) {
   return true;
 }
 
-const 
 
 describe("Array", () => {
   describe("chunk()", () => {
